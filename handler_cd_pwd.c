@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handler_cd_pwd.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astoiano <astoiano@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 21:58:36 by astoiano          #+#    #+#             */
+/*   Updated: 2024/05/28 22:45:04 by astoiano         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	get_cd_or_pwd(int signal)
@@ -10,7 +22,6 @@ void	get_cd_or_pwd(int signal)
 	fd = open(CD_PWD_R, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("erroooooor\n");
 		return ;
 	}
 	count_status[1] = read(fd, &character, 1);
@@ -32,9 +43,9 @@ void	get_cd_or_pwd(int signal)
 
 void	handle_cd(int *count_status)
 {
-	char *readbuffer;
-	int fd;
-	int status;
+	char	*readbuffer;
+	int		fd;
+	int		status;
 
 	fd = open(CD_PWD_R, O_RDONLY);
 	readbuffer = (char *)malloc(count_status[0] + 1);
@@ -45,6 +56,6 @@ void	handle_cd(int *count_status)
 	status = chdir(readbuffer);
 	if (status != 0)
 	{
-		printf("Error al cambiar de ruta\n");
+		printf("Error al cambiar de ruta\n");//change error message
 	}
 }

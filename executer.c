@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astoiano <astoiano@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 21:54:58 by astoiano          #+#    #+#             */
+/*   Updated: 2024/05/29 15:43:14 by astoiano         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	*status_exit(int new_status)
@@ -49,15 +61,15 @@ void	create_unique_name(char **env)
 
 void	execute(char **env, char *full_command_line)
 {
-	int pid;
-	int status;
-	int pipes[2];
-	// hacer que el input sea un double pointer **
-	char **input;
+	int		pid;
+	int		status;
+	int		pipes[2];	
+	char	**input; // hacer que el input sea un double pointer **
+
 	input = (char **)malloc(sizeof(char *) * 3);
 	input[0] = EXEC_R_S;
 	input[1] = full_command_line;
-	input[2] = 0;
+	input[2] = 0; //into create array function
 	pipe(pipes);
 	pid = fork();
 	if (pid == 0)

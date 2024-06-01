@@ -7,7 +7,7 @@ ECHO_NAME = our_echo
 CC = cc
 
 OG_ROUTE = "$(shell pwd)/"
-SCRIPT_01 = "pid=\$$(pgrep -f minishell | head -1)\\n"
+SCRIPT_01 = "pid=\$$(pgrep -f minishell)\\n"
 EXP_ROUTE = "$(OG_ROUTE)FINAL_EXPORT $$""@"""" $$""pid"
 UNSET_ROUTE = "$(OG_ROUTE)FINAL_UNSET $$""@"""" $$""pid"
 CD_ROUTE = "$(OG_ROUTE)FINAL_CD $$""@"""" $$""pid"
@@ -42,17 +42,22 @@ SRC = minishell.c file_creator.c \
 	ft_strlen.c ft_substr.c \
 	executer.c \
 	envs_treater.c file_delete.c \
-	ft_strjoin.c builtins_expansor.c \
+	ft_strjoin.c parse_builtins.c \
 	handler_cd_pwd.c file_cd_pwd.c \
-	ft_itoa.c get_command.c signals_handler.c
+	ft_itoa.c parse_command.c \
+	signals_handler.c create_array.c \
+	ft_putstrfd.c ft_atoi.c \
+	ft_isdigit.c
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
 
-EXP_SRC = built_in_export.c
+EXP_SRC = built_in_export.c ft_atoi.c \
+		  ft_putstrfd.c ft_isdigit.c
 EXP_OBJ = $(EXP_SRC:.c=.o)
 EXP_DEP = $(EXP_SRC:.c=.d)
 
-UNS_SRC = built_in_unset.c
+UNS_SRC = built_in_unset.c ft_atoi.c \
+		  ft_putstrfd.c ft_isdigit.c ft_strlen.c
 UNS_OBJ = $(UNS_SRC:.c=.o)
 UNS_DEP = $(UNS_SRC:.c=.d)
 

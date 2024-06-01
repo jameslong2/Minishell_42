@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astoiano <astoiano@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 21:59:25 by astoiano          #+#    #+#             */
+/*   Updated: 2024/05/29 16:46:10 by jaucarri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	create_files(void)
@@ -16,6 +28,8 @@ void	delete_files(void)
 	delete_file(our_envs(0, 0), UNS_R_S);
 	delete_file(our_envs(0, 0), CD_R_S);
 	delete_file(our_envs(0, 0), PWD_R_S);
+	delete_file(our_envs(0, 0), ENVS_R);
+	delete_file(our_envs(0, 0), CD_PWD_R);
 }
 
 void	full_exit(void)
@@ -24,11 +38,16 @@ void	full_exit(void)
 	exit(0);
 }
 
+void printenv(char **env)
+{
+	while (*env != 0)
+		printf("%s\n",*(env++));
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char *line;
-	signal(SIGUSR2, get_cd_or_pwd);
-	signal(SIGUSR1, cargar_envs);
+	char	*line;
+
 	signal(SIGINT, default_sig);
 	our_envs(0, env);
 	while (1)
@@ -45,9 +64,9 @@ int	main(int argc, char **argv, char **env)
 		delete_file(our_envs(0, 0), ENVS_R);
 		delete_file(our_envs(0, 0), CD_PWD_R);
 		execute(our_envs(0, 0), line);
-		// execute(our_envs(0,0), line);
+		get_cd_or_pwd(0);
+		cargar_envs(0);
 		delete_files();
 	}
-	printf("%s\n", OG_R);
 	return (0);
 }

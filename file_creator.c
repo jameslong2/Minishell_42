@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_creator.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astoiano <astoiano@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 21:57:35 by astoiano          #+#    #+#             */
+/*   Updated: 2024/05/28 21:57:43 by astoiano         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	create_final_file(char **env, char *filename, char *file_content)
@@ -54,14 +66,8 @@ void	only_exec_permissions(char **env, char *filename)
 	int		status;
 	int		pipes[2];
 	char	**input;
-	int		i;
 
-	i = 2;
-	input = (char **)malloc(sizeof(char *) * 4);
-	input[0] = ft_strjoin("/bin/bash", "");
-	input[1] = ft_strjoin("-c", "");
-	input[2] = ft_strjoin("chmod 555 ", filename);
-	input[3] = 0;
+	input = create_array(ft_strjoin("chmod 555 ", filename));
 	pipe(pipes);
 	pid = fork();
 	if (pid == 0)
@@ -77,7 +83,5 @@ void	only_exec_permissions(char **env, char *filename)
 		close(pipes[1]);
 		waitpid(pid, &status, 0);
 	}
-	while (i >= 0)
-		free(input[i--]);
-	free(input);
+	free_array(input, 2);
 }

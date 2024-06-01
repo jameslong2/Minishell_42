@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envs_treater.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: astoiano <astoiano@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 21:53:33 by astoiano          #+#    #+#             */
+/*   Updated: 2024/05/29 15:31:45 by astoiano         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**our_envs(char *file, char **init_envs)
 {
-	static char	**envs;
+	static char	**envs = 0;
 
-	envs = 0;
 	// liberar memoria para evitar leaks
 	if (init_envs == 0 && file != 0)
 		envs = ft_split(file, '\n');
@@ -16,15 +27,14 @@ char	**our_envs(char *file, char **init_envs)
 // para las env, utilizar SIGUSR1 para cargar las nuevas envs
 void	cargar_envs(int signal)
 {
-	int fd;
-	int count_status[2];
-	char character;
-	char *readbuffer;
+	int		fd;
+	int		count_status[2];
+	char	character;
+	char	*readbuffer;
 
 	fd = open(ENVS_R, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("erroooooor\n");
 		return ;
 	}
 	count_status[1] = read(fd, &character, 1);
