@@ -18,7 +18,20 @@
 \
 #!/bin/bash\n \
 process_command(){\n \
-  command=\"$1\"\n \
+regex='(\\|*[^|]*cd_script.sh[^|]*)||([^|]*cd_script.sh[^|]*\\|*)||\
+(\\|*[^|]*export_script.sh[^|]*)||([^|]*export_script.sh[^|]*\\|*)||\
+(\\|*[^|]*unset_script.sh[^|]*)||([^|]*unset_script.sh[^|]*\\|*)'\n\
+reg_pipes='([^|]+\\|)||(\\|[^|]+)||([^|]+\\|[^|]+)' \n \
+num=$(echo \"${1}\" | grep -Eo $reg_pipes | wc -l) \n \
+matches=$(echo \"${1}\" | grep -Eo $regex) \n \
+final_word=$1 \n \
+if [[ $num -gt 0 ]] \n \
+then \n \
+    while IFS= read -r match; do \n \
+        final_word=${final_word//\"$match\"/} \n \
+    done <<< \"$matches\" \n \
+fi \n \
+  command=\"$final_word\"\n \
   eval \"$command\"\n \
   exit $?\n \
 }\n \
