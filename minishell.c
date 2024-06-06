@@ -35,6 +35,8 @@ void	delete_files(void)
 void	full_exit(void)
 {
 	delete_files();
+	free(list_commands());
+	command_path(-1);
 	exit(0);
 }
 

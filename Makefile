@@ -36,6 +36,7 @@ CFLAGS = -DEXP_S=\"$(SCRIPT_01)$(EXP_ROUTE)\" \
 			-DENVS_R=\"$(ENVS_ROUTE)\" \
 			-DCD_PWD_R=\"$(CD_PWD_ROUTE)\" \
 			-DECHO_R=\"$(ECHO_ROUTE)\" \
+			-fsanitize=address \
 			#-Wall -Werror -Wextra -fsanitize=thread
 SRC = minishell.c file_creator.c \
 	ft_split.c ft_strlcpy.c \

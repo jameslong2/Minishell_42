@@ -54,5 +54,6 @@ void	delete_file(char **env, char *filename)
 		close(pipes[1]);
 		waitpid(pid, &status, 0);
 	}
-	free_array(input, 2);
+	free(input[2]);
+	free(input);
 }

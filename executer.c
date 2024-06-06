@@ -87,4 +87,5 @@ void	execute(char **env, char *full_command_line)
 		waitpid(pid, &status, 0);
 		status_exit(status);
 	}
+	free(input);
 }

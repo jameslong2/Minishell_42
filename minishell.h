@@ -13,6 +13,12 @@
 # include <assert.h>
 # include <sys/param.h>
 # define MINISHELL_H
+# ifndef COMM
+#  define COMM "/bin/bash"
+# endif
+# ifndef FLAG
+#  define FLAG "-c"
+# endif
 # ifndef EXEC
 #  define EXEC "\
 \
